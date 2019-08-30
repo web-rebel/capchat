@@ -1,5 +1,4 @@
 const express = require('express');
-
 const connectDb = require('./config/db');
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -17,4 +16,4 @@ app.use('/api/posts', require('./routes/api/posts'));
 app.use('/api/auth', require('./routes/api/auth'));
 
 
-app.listen(PORT, console.log(`Conntected to port:${PORT}`));
+app.listen(PORT, console.log(`Connected on port ${PORT}`));
