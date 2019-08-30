@@ -97,10 +97,10 @@ router.post('/', [auth, [
  * @desc    Get user profile by id
  * @access  Public
  */
-router.get('/user/:user_id', async (reg, res) => {
+router.get('/user/:user_id', async (req, res) => {
 
     try {
-        const profile = await Profile.findOne({ user: reg.params.user_id }).populate('user', ['name', 'avatar']);
+        const profile = await Profile.findOne({ user: req.params.user_id }).populate('user', ['name', 'avatar']);
 
         if (!profile) { 
             return res.status(400).json({ msg: 'Profile not found'});
@@ -123,11 +123,31 @@ router.get('/user/:user_id', async (reg, res) => {
  * @desc    Get all user profiles
  * @access  Public
  */
-router.get('/', async (reg, res) => {
-
+router.get('/', async (req, res) => {
     try {
         const profiles = await Profile.find().populate('user', ['name', 'avatar']);
         res.json(profiles);
+    } catch (error) {
+        console.error(error.message);
+        res.status(500).send('Server Error');
+    }
+});
+
+/**
+ * @route   DELETE api/profile
+ * @desc    Delete profile, user and posts
+ * @access  Private
+ */
+router.delete('/', auth, async (req, res) => {
+    try {
+        // Remove profile
+        await Profile.findOneAndRemove({ user: req.user.id });
+
+        // Remove the user
+        await User.findOneAndRemove({ _id: req.user.id });
+
+        res.json({ msg: 'User deleted' });
+
     } catch (error) {
         console.error(error.message);
         res.status(500).send('Server Error');
