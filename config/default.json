@@ -1,4 +1,6 @@
 {
     "mongoURI": "mongodb+srv://Web:nxOcG5874SILOnWh@profiler-nt9xt.mongodb.net/test?retryWrites=true&w=majority",
-    "jwtSecret": "mysecrettoken"
+    "jwtSecret": "mysecrettoken",
+    "githubClientID": "e0b8e50ceef1d7fc1743",
+    "githubSecret": "fe86c821c4ef22566a2fa6bf53f5290d0daa2e41"
 }
